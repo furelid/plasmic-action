@@ -43,6 +43,19 @@ export function mkPackageManagerCmds(cwd: string): PackageManagerCmds {
     };
   }
 
+  const usePnpm =
+    existsSync(path.join(cwd, "pnpm-lock.yaml")) ||
+    existsSync(path.join(".", "pnpm-lock.yaml"));
+
+  if (usePnpm) {
+    return {
+      install: "pnpm install",
+      run: "pnpm",
+      add: "pnpm add",
+      cmd: "pnpx",
+    };
+  }
+
   return {
     install: "npm install",
     run: "npm run",
